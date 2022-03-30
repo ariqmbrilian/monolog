@@ -4,11 +4,12 @@ sudo cp postgres_exporter-*.linux-amd64/postgres_exporter /usr/local/bin
 find file queries.yaml
 
 cat <<EOF > /usr/local/bin/postgres_exporter.env
-export DATA_SOURCE_NAME='postgresql://postgres:password@192.168.254.85:5432/postgres?sslmode=disable'
+DATA_SOURCE_NAME="postgresql://postgres:password@192.168.254.85:5432/postgres?sslmode=disable"
 EOF
 
 cat <<EOF > /etc/systemd/system/postgres_exporter.service
 [Service]
+WorkingDirectory=/usr/local/bin
 EnvironmentFile=/usr/local/bin/postgres_exporter.env
 ExecStart=/usr/local/bin/postgres_exporter --extend.query-path /usr/local/bin/queries.yaml
 
